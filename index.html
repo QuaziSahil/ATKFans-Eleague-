@@ -940,10 +940,13 @@
 
       // Sorting
       let displayData = [...leagueData].sort((a, b) => {
+        if (allZero) {
+          return a.id - b.id;
+        }
         if (sortColumn === 'name') {
           return sortDirection === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
         }
-        if (sortColumn === 'rank' || allZero) {
+        if (sortColumn === 'rank') {
           return sortDirection === 'asc' ? a.id - b.id : b.id - a.id;
         }
         if (a[sortColumn] === b[sortColumn]) {
