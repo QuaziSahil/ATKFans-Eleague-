@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATK Fans eFootball League | Official Standings</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070b14;
+      --card-bg: rgba(13, 20, 36, 0.94);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(25, 38, 68, 0.9);
+      --atk-crimson: #c8102e;
+      --atk-gold: #f5a623;
+      --playoff-blue: #0088ff;
+      --relegation-red: #ff4d4f;
+      --text-main: #f0f4fc;
+      --text-muted: #8e9bb0;
+      --text-dim: #5c687e;
+      --row-zebra: rgba(255, 255, 255, 0.018);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 50px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* High-Performance Fixed Background (Eliminates Scroll Stutter) */
+    .bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        linear-gradient(180deg, rgba(7, 11, 20, 0.86) 0%, rgba(9, 15, 28, 0.95) 100%),
+        url('assets/stadium_bg.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: -1;
+      transform: translateZ(0);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Bar */
+    header {
+      padding: 30px 0 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      margin-bottom: 24px;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .league-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .atk-crest-logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1f0a12, #3b0a16);
+      border: 2px solid rgba(245, 166, 35, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .atk-crest-logo svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .brand-titles h1 {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: linear-gradient(100deg, #ffffff 40%, #ffd066 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+    }
+
+    .brand-titles .subtitle {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .subtitle .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(215, 25, 32, 0.2);
+      color: #ff5252;
+      border: 1px solid rgba(215, 25, 32, 0.4);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .badge-live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #ff5252;
+      border-radius: 50%;
+    }
+
+    /* Filter Controls & Search */
+    .controls-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .tab-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab-pill {
+      background: rgba(14, 21, 38, 0.85);
+      border: 1px solid var(--card-border);
+      padding: 7px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+      font-family: inherit;
+    }
+
+    .tab-pill:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .tab-pill.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .search-box {
+      position: relative;
+      width: 250px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(14, 21, 38, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 8px 14px 8px 34px;
+      font-size: 13px;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--atk-gold);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: var(--text-dim);
+    }
+
+    /* STANDINGS TABLE (Optimized 60 FPS) */
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+      transform: translateZ(0);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    thead {
+      background: #0a0f1d;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    th {
+      padding: 13px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      user-select: none;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    th:hover {
+      color: #fff;
+    }
+
+    th.sorted-asc::after {
+      content: ' ▲';
+      font-size: 9px;
+      color: var(--atk-gold);
+    }
+
+    th.sorted-desc::after {
+      content: ' ▼';
+      font-size: 9px;
+      color: var(--atk-gold);
+    }
+
+    th.text-center, td.text-center {
+      text-align: center;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+      cursor: pointer;
+      contain: content;
+      transition: background-color 0.12s ease;
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--row-zebra);
+    }
+
+    tbody tr:hover {
+      background: var(--card-hover) !important;
+    }
+
+    /* Rank with Left Qualification Bar */
+    td.col-rank {
+      position: relative;
+      width: 46px;
+      padding-left: 20px;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    /* TOP 6 PLAYOFFS: Blue Indicator (Rank 1-6) */
+    tr.zone-playoffs td.col-rank::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--playoff-blue);
+    }
+
+    /* BOTTOM 2 RELEGATION: Red Indicator (Rank 11-12) */
+    tr.zone-relegation td.col-rank::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--relegation-red);
+    }
+
+    /* Club & Crest Column */
+    td.col-club {
+      padding: 12px;
+      min-width: 200px;
+    }
+
+    .club-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .crest-wrapper {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .crest-wrapper svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .club-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .club-name {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .gamer-handle {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    /* Stats Columns */
+    td.col-stat {
+      padding: 12px 10px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+
+    /* Points column highlighted */
+    td.col-pts {
+      font-size: 16px;
+      font-weight: 900;
+      color: #ffffff;
+      font-family: 'Rajdhani', sans-serif;
+      padding: 12px 14px;
+    }
+
+    .top-rank-pts {
+      color: #ffd066 !important;
+    }
+
+    .gd-pos { color: #26e792; font-weight: 600; }
+    .gd-neg { color: #ff5e6d; font-weight: 600; }
+    .gd-zero { color: var(--text-muted); }
+
+    /* Last 5 Form Badges */
+    td.col-form {
+      padding: 12px 16px;
+      min-width: 150px;
+    }
+
+    .form-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-pill {
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: #fff;
+      position: relative;
+      user-select: none;
+    }
+
+    .form-empty {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+
+    .form-w { background: #00d26a; }
+    .form-d { background: #6e798e; }
+    .form-l { background: #eb3b5a; }
+
+    /* Footer Legend */
+    .table-footer {
+      background: #090e1c;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 13px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .legend-items {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .legend-blue { background: var(--playoff-blue); }
+    .legend-red { background: var(--relegation-red); }
+
+    .last-updated {
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+
+    /* Lightweight Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 480px;
+      padding: 24px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .modal-crest {
+      width: 48px;
+      height: 48px;
+    }
+
+    .modal-header h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .modal-header p {
+      font-size: 12.5px;
+      color: var(--atk-gold);
+      font-weight: 600;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .detail-item {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .detail-item span {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .detail-item strong {
+      font-size: 17px;
+      font-family: 'Rajdhani', sans-serif;
+      color: #fff;
+    }
+
+    /* Mobile & Tablet Ultra-Optimization */
+    @media (max-width: 900px) {
+      .col-stat.hide-mob, th.hide-mob { display: none; }
+      .brand-titles h1 { font-size: 21px; }
+      .container { padding: 0 16px; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding-bottom: 30px; }
+      .container { padding: 0 10px; }
+
+      header {
+        padding: 20px 0 16px;
+        margin-bottom: 16px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .atk-crest-logo {
+        width: 44px;
+        height: 44px;
+      }
+
+      .atk-crest-logo svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .brand-titles h1 {
+        font-size: 18px;
+        letter-spacing: 0.2px;
+      }
+
+      .brand-titles .subtitle {
+        font-size: 11px;
+        letter-spacing: 1px;
+      }
+
+      .controls-panel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .tab-pills {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+      }
+
+      .tab-pills::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab-pill {
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 11px;
+        flex-shrink: 0;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .search-box input {
+        padding: 7px 12px 7px 32px;
+        font-size: 12px;
+      }
+
+      /* Compact Table for Mobile */
+      .table-container {
+        border-radius: 10px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      th {
+        padding: 10px 6px;
+        font-size: 10.5px;
+      }
+
+      th.hide-sm, .col-stat.hide-sm {
+        display: none;
+      }
+
+      td.col-rank {
+        width: 32px;
+        padding-left: 12px;
+        font-size: 13px;
+      }
+
+      td.col-club {
+        padding: 9px 6px;
+        min-width: 130px;
+      }
+
+      .club-cell {
+        gap: 8px;
+      }
+
+      .crest-wrapper {
+        width: 24px;
+        height: 24px;
+      }
+
+      .club-name {
+        font-size: 13px;
+        line-height: 1.2;
+      }
+
+      .gamer-handle {
+        font-size: 10px;
+      }
+
+      td.col-stat {
+        padding: 9px 5px;
+        font-size: 12px;
+      }
+
+      td.col-pts {
+        padding: 9px 7px;
+        font-size: 14.5px;
+      }
+
+      .table-footer {
+        padding: 10px 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .legend-items {
+        gap: 12px;
+      }
+
+      .legend-item {
+        font-size: 11px;
+      }
+
+      .last-updated {
+        font-size: 10.5px;
+      }
+
+      /* Mobile Modal */
+      .modal-card {
+        padding: 18px 16px;
+        max-width: 92vw;
+        border-radius: 14px;
+      }
+
+      .modal-header h3 {
+        font-size: 17px;
+      }
+
+      .detail-grid {
+        gap: 8px;
+      }
+
+      .detail-item {
+        padding: 8px 10px;
+      }
+
+      .detail-item strong {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed Butter-Smooth Background Canvas -->
+  <div class="bg-canvas"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="header-content">
+        <div class="league-brand">
+          <div class="atk-crest-logo">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 8L88 24V56C88 76 50 94 50 94C50 94 12 76 12 56V24L50 8Z" fill="#C8102E" stroke="#F5A623" stroke-width="4"/>
+              <path d="M50 20L60 38L80 40L65 54L69 74L50 63L31 74L35 54L20 40L40 38L50 20Z" fill="#F5A623"/>
+              <circle cx="50" cy="52" r="12" fill="#0C111E" stroke="#FFFFFF" stroke-width="2"/>
+              <path d="M44 52L48 56L56 48" stroke="#00D26A" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-titles">
+            <h1>ATK Fans eFootball League</h1>
+            <div class="subtitle">
+              <span class="badge-live">LIVE FIXTURES</span>
+              <span>SEASON 4 • OFFICIAL POINTS TABLE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Filter & Search Controls -->
+    <div class="controls-panel">
+      <div class="tab-pills">
+        <button class="tab-pill active" onclick="filterZone('all', this)">All Teams (12)</button>
+        <button class="tab-pill" onclick="filterZone('playoffs', this)">🔵 Top 6 (Playoffs)</button>
+        <button class="tab-pill" onclick="filterZone('relegation', this)">🔴 Relegation (11-12)</button>
+      </div>
+
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="teamSearch" placeholder="Search team..." oninput="handleSearch(this.value)">
+      </div>
+    </div>
+
+    <!-- The Standings Table -->
+    <div class="table-container">
+      <table id="standingsTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable('rank')" style="width: 50px;">#</th>
+            <th onclick="sortTable('name')">Club / Manager</th>
+            <th class="text-center" onclick="sortTable('mp')" title="Matches Played">MP</th>
+            <th class="text-center" onclick="sortTable('w')" title="Wins">W</th>
+            <th class="text-center" onclick="sortTable('d')" title="Draws">D</th>
+            <th class="text-center" onclick="sortTable('l')" title="Losses">L</th>
+            <th class="text-center hide-sm" onclick="sortTable('gf')" title="Goals For">GF</th>
+            <th class="text-center hide-sm" onclick="sortTable('ga')" title="Goals Against">GA</th>
+            <th class="text-center" onclick="sortTable('gd')" title="Goal Difference">GD</th>
+            <th class="text-center" onclick="sortTable('pts')" title="Points">Pts</th>
+            <th class="hide-mob">Last 5</th>
+          </tr>
+        </thead>
+        <tbody id="standingsBody">
+          <!-- Rows rendered by JS -->
+        </tbody>
+      </table>
+
+      <!-- Qualification Legend Footer -->
+      <div class="table-footer">
+        <div class="legend-items">
+          <div class="legend-item">
+            <span class="legend-dot legend-blue"></span>
+            <span>Championship Playoffs (Rank 1 – 6)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot legend-red"></span>
+            <span>Relegation Play-down (Rank 11 – 12)</span>
+          </div>
+        </div>
+
+        <div class="last-updated">
+          <span id="matchdayFooter">12 Teams Registered • Pre-Season Standings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team Details Modal -->
+  <div class="modal-backdrop" id="teamModal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-header">
+        <div class="crest-wrapper modal-crest" id="modalCrest"></div>
+        <div>
+          <h3 id="modalClubName">Team Name</h3>
+          <p id="modalGamer">Manager / Participant</p>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span>Table Position</span>
+          <strong id="modalRank">#1</strong>
+        </div>
+        <div class="detail-item">
+          <span>Total Points</span>
+          <strong id="modalPts">0 Pts</strong>
+        </div>
+        <div class="detail-item">
+          <span>Win Rate</span>
+          <strong id="modalWinRate">0%</strong>
+        </div>
+        <div class="detail-item">
+          <span>Goal Difference</span>
+          <strong id="modalGD">0</strong>
+        </div>
+        <div class="detail-item">
+          <span>Goals (GF / GA)</span>
+          <strong id="modalGFGA">0 / 0</strong>
+        </div>
+        <div class="detail-item">
+          <span>Status</span>
+          <strong id="modalStatus" style="color: var(--playoff-blue);">Playoff Contender</strong>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08);">
+        <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Recent Fixture History:</span>
+        <div id="modalHistory" style="display: flex; gap: 8px; margin-top: 8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Lightweight Vector Crest Generator
+    function generateCrestSVG(color1, color2, styleType, initial = 'A') {
+      if (styleType === 'shield') {
+        return `<svg viewBox="0 0 60 60" fill="none">
+          <path d="M30 6 L52 14 V36 C52 48 30 58 30 58 C30 58 8 48 8 36 V14 L30 6 Z" fill="${color1}" stroke="${color2}" stroke-width="3"/>
+          <text x="30" y="38" font-size="18" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="'Rajdhani', sans-serif">${initial}</text>
+        </svg>`;
+      } else if (styleType === 'circle') {
+        return `<svg viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="${color1}" stroke="${color2}" stroke-width="3.5"/>
+          <text x="30" y="37" font-size="18" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="'Rajdhani', sans-serif">${initial}</text>
+        </svg>`;
+      } else if (styleType === 'stripes') {
+        return `<svg viewBox="0 0 60 60" fill="none">
+          <path d="M30 6 L50 14 V34 C50 46 30 56 30 56 C30 56 10 46 10 34 V14 L30 6 Z" fill="${color1}"/>
+          <path d="M22 8 V53 M38 8 V53" stroke="${color2}" stroke-width="3.5"/>
+          <circle cx="30" cy="30" r="13" fill="#111827" stroke="${color2}" stroke-width="2"/>
+          <text x="30" y="36" font-size="15" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="'Rajdhani', sans-serif">${initial}</text>
+        </svg>`;
+      } else {
+        return `<svg viewBox="0 0 60 60" fill="none">
+          <polygon points="30,6 54,18 45,52 15,52 6,18" fill="${color1}" stroke="${color2}" stroke-width="3"/>
+          <text x="30" y="37" font-size="16" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="'Rajdhani', sans-serif">${initial}</text>
+        </svg>`;
+      }
+    }
+
+    // Official ATK Fans eFootball League Roster (12 Teams)
+    // You can update the stats directly in this array anytime!
+    const leagueData = [
+      { id: 1, name: "Dibyendu", gamer: "Dibyendu_FC", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#c8102e', '#f5a623', 'shield', 'DIB') },
+      { id: 2, name: "Kaustab", gamer: "Kaustab_XI", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#0d47a1', '#00e5ff', 'circle', 'KAU') },
+      { id: 3, name: "Rishiraj", gamer: "Rishiraj_FC", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#00796b', '#ffca28', 'stripes', 'RSH') },
+      { id: 4, name: "Rex Sayan", gamer: "Rex_Sayan", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#4a148c', '#e040fb', 'polygon', 'REX') },
+      { id: 5, name: "Debu", gamer: "Debu_Strikers", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#e65100', '#ffd600', 'shield', 'DEB') },
+      { id: 6, name: "Rahul", gamer: "Rahul_United", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#212121', '#ffffff', 'stripes', 'RHL') },
+      { id: 7, name: "Tutun", gamer: "Tutun_Blasters", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#880e4f', '#ff4081', 'circle', 'TTN') },
+      { id: 8, name: "Prakash", gamer: "Prakash_Kings", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#01579b', '#ffab00', 'polygon', 'PRK') },
+      { id: 9, name: "Romit", gamer: "Romit_Squad", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#004d40', '#69f0ae', 'shield', 'RMT') },
+      { id: 10, name: "Ankit", gamer: "Ankit_Dynamos", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#4a0e17', '#ffd700', 'circle', 'ANK') },
+      { id: 11, name: "Sahil", gamer: "Sahil_ATK", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#b71c1c', '#ffffff', 'stripes', 'SHL') },
+      { id: 12, name: "Anindya", gamer: "Anindya_Warriors", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#1a237e', '#40c4ff', 'polygon', 'AND') }
+    ];
+
+    let sortColumn = 'pts';
+    let sortDirection = 'desc';
+    let activeFilter = 'all';
+    let searchQuery = '';
+
+    function init() {
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('standingsBody');
+      tbody.innerHTML = '';
+
+      const allZero = leagueData.every(t => t.mp === 0 && t.pts === 0);
+
+      // Sorting
+      let displayData = [...leagueData].sort((a, b) => {
+        if (sortColumn === 'name') {
+          return sortDirection === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+        }
+        if (sortColumn === 'rank' || allZero) {
+          return sortDirection === 'asc' ? a.id - b.id : b.id - a.id;
+        }
+        if (a[sortColumn] === b[sortColumn]) {
+          if (a.gd !== b.gd) return b.gd - a.gd;
+          if (a.gf !== b.gf) return b.gf - a.gf;
+          return a.name.localeCompare(b.name);
+        }
+        return sortDirection === 'asc' ? a[sortColumn] - b[sortColumn] : b[sortColumn] - a[sortColumn];
+      });
+
+      // Filter by Zone or Search
+      let filteredData = displayData.filter((team, index) => {
+        const rank = index + 1;
+        if (searchQuery.trim() !== '') {
+          const matchName = team.name.toLowerCase().includes(searchQuery.toLowerCase());
+          const matchGamer = team.gamer ? team.gamer.toLowerCase().includes(searchQuery.toLowerCase()) : false;
+          if (!matchName && !matchGamer) return false;
+        }
+
+        if (activeFilter === 'playoffs') return rank <= 6;
+        if (activeFilter === 'relegation') return rank >= 11;
+        return true;
+      });
+
+      // Render Rows
+      filteredData.forEach((team) => {
+        const rank = displayData.indexOf(team) + 1;
+        const tr = document.createElement('tr');
+        
+        // Qualification Zone classes: TOP 6 PLAYOFFS, BOTTOM 2 RELEGATION
+        if (rank <= 6) {
+          tr.classList.add('zone-playoffs');
+        } else if (rank >= 11) {
+          tr.classList.add('zone-relegation');
+        }
+
+        tr.onclick = (e) => {
+          if (!e.target.closest('.form-pill')) {
+            showTeamDetails(team, rank);
+          }
+        };
+
+        const gdDisplay = team.gd > 0 ? `+${team.gd}` : `${team.gd}`;
+        const gdClass = team.gd > 0 ? 'gd-pos' : (team.gd < 0 ? 'gd-neg' : 'gd-zero');
+
+        // Form Badges: 5 pills
+        let formHtml = '';
+        if (!team.form || team.form.length === 0) {
+          for (let i = 0; i < 5; i++) {
+            formHtml += `<div class="form-pill form-empty">–</div>`;
+          }
+        } else {
+          const emptyCount = Math.max(0, 5 - team.form.length);
+          for (let i = 0; i < emptyCount; i++) {
+            formHtml += `<div class="form-pill form-empty">–</div>`;
+          }
+          team.form.slice(-5).forEach((res) => {
+            let cls = res === 'w' ? 'form-w' : (res === 'l' ? 'form-l' : 'form-d');
+            let icon = res === 'w' ? '✓' : (res === 'l' ? '✕' : '–');
+            formHtml += `<div class="form-pill ${cls}">${icon}</div>`;
+          });
+        }
+
+        tr.innerHTML = `
+          <td class="col-rank">${rank}</td>
+          <td class="col-club">
+            <div class="club-cell">
+              <div class="crest-wrapper">${team.crest}</div>
+              <div class="club-details">
+                <span class="club-name">${team.name}</span>
+                <span class="gamer-handle">${team.gamer || 'eFootball Squad'}</span>
+              </div>
+            </div>
+          </td>
+          <td class="col-stat text-center">${team.mp}</td>
+          <td class="col-stat text-center">${team.w}</td>
+          <td class="col-stat text-center">${team.d}</td>
+          <td class="col-stat text-center">${team.l}</td>
+          <td class="col-stat text-center hide-sm">${team.gf}</td>
+          <td class="col-stat text-center hide-sm">${team.ga}</td>
+          <td class="col-stat text-center ${gdClass}">${gdDisplay}</td>
+          <td class="col-pts text-center ${rank === 1 && !allZero ? 'top-rank-pts' : ''}">${team.pts}</td>
+          <td class="col-form hide-mob">
+            <div class="form-pills">${formHtml}</div>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+
+      // Update matchday footer
+      const totalMatches = leagueData.reduce((acc, t) => acc + t.mp, 0) / 2;
+      const footerElem = document.getElementById('matchdayFooter');
+      if (footerElem) {
+        footerElem.textContent = totalMatches === 0 
+          ? '12 Teams Registered • Pre-Season Standings' 
+          : `${totalMatches} Matches Played • Live Standings`;
+      }
+    }
+
+    function sortTable(col) {
+      if (sortColumn === col) {
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortColumn = col;
+        sortDirection = (col === 'name' || col === 'rank') ? 'asc' : 'desc';
+      }
+
+      document.querySelectorAll('th').forEach(th => th.classList.remove('sorted-asc', 'sorted-desc'));
+      const targetTh = event.target.closest('th');
+      if (targetTh) {
+        targetTh.classList.add(sortDirection === 'asc' ? 'sorted-asc' : 'sorted-desc');
+      }
+
+      renderTable();
+    }
+
+    function filterZone(zone, btn) {
+      activeFilter = zone;
+      document.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      renderTable();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      renderTable();
+    }
+
+    function showTeamDetails(team, rank) {
+      document.getElementById('modalCrest').innerHTML = team.crest;
+      document.getElementById('modalClubName').textContent = team.name;
+      document.getElementById('modalGamer').textContent = team.gamer ? `Manager / Tag: ${team.gamer}` : 'eFootball Participant';
+      document.getElementById('modalRank').textContent = `#${rank} in Table`;
+      document.getElementById('modalPts').textContent = `${team.pts} Points`;
+      
+      const winRate = team.mp > 0 ? Math.round((team.w / team.mp) * 100) : 0;
+      document.getElementById('modalWinRate').textContent = team.mp > 0 ? `${winRate}% (${team.w}W-${team.d}D-${team.l}L)` : '0% (0 Matches)';
+      document.getElementById('modalGD').textContent = team.gd > 0 ? `+${team.gd}` : `${team.gd}`;
+      document.getElementById('modalGFGA').textContent = `${team.gf} / ${team.ga}`;
+      
+      const statusElem = document.getElementById('modalStatus');
+      if (rank <= 6) {
+        statusElem.textContent = 'Top 6 Playoff Spot';
+        statusElem.style.color = 'var(--playoff-blue)';
+      } else if (rank >= 11) {
+        statusElem.textContent = 'Relegation Zone';
+        statusElem.style.color = 'var(--relegation-red)';
+      } else {
+        statusElem.textContent = 'Mid-Table';
+        statusElem.style.color = 'var(--text-muted)';
+      }
+
+      const historyContainer = document.getElementById('modalHistory');
+      if (!team.form || team.form.length === 0) {
+        historyContainer.innerHTML = '<span style="font-size:12px; color:var(--text-dim);">No matches played yet.</span>';
+      } else {
+        historyContainer.innerHTML = team.form.map((res) => {
+          let cls = res === 'w' ? 'form-w' : (res === 'l' ? 'form-l' : 'form-d');
+          let txt = res === 'w' ? '✓' : (res === 'l' ? '✕' : '–');
+          return `<div class="form-pill ${cls}" style="width: 24px; height: 24px; font-size: 12px;">${txt}</div>`;
+        }).join('');
+      }
+
+      document.getElementById('teamModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('teamModal').classList.remove('active');
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'teamModal') closeModal();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    window.onload = init;
+  </script>
+</body>
+</html>
