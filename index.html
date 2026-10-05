@@ -234,8 +234,33 @@
       transform: translateZ(0);
     }
 
+    .table-scroll-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+
+    .table-scroll-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-scroll-wrapper::-webkit-scrollbar-track {
+      background: rgba(10, 15, 29, 0.85);
+    }
+
+    .table-scroll-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(255, 208, 102, 0.35);
+      border-radius: 3px;
+    }
+
+    .table-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 208, 102, 0.6);
+    }
+
     table {
       width: 100%;
+      min-width: 720px;
       border-collapse: collapse;
       text-align: left;
     }
@@ -354,18 +379,31 @@
     .club-details {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+      min-width: 0;
     }
 
     .club-name {
+      display: block;
       font-size: 14.5px;
       font-weight: 700;
       color: #fff;
+      line-height: 1.25;
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
     }
 
     .gamer-handle {
+      display: block;
       font-size: 11px;
       color: var(--text-dim);
       font-weight: 500;
+      line-height: 1.25;
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
     }
 
     /* Stats Columns */
@@ -571,18 +609,46 @@
       color: #fff;
     }
 
-    /* Mobile & Tablet Ultra-Optimization */
+    /* Mobile Touch Scroll Cue Banner */
+    .mobile-scroll-cue {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--atk-gold);
+      background: rgba(255, 208, 102, 0.08);
+      border: 1px solid rgba(255, 208, 102, 0.22);
+      padding: 8px 14px;
+      border-radius: 9px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .mobile-scroll-cue svg {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      color: var(--atk-gold);
+    }
+
+    /* Tablet Optimization */
     @media (max-width: 900px) {
-      .hide-mob, th.hide-mob, td.hide-mob, td.col-form.hide-mob { 
-        display: none !important; 
-      }
       .brand-titles h1 { font-size: 21px; }
       .container { padding: 0 16px; }
     }
 
+    /* Mobile & Touch Devices */
+    @media (max-width: 768px) {
+      .mobile-scroll-cue {
+        display: flex;
+      }
+    }
+
     @media (max-width: 640px) {
       body { padding-bottom: 75px; } /* Clean clearance above Netlify badge */
-      .container { padding: 0 8px; }
+      .container { padding: 0 10px; }
 
       header {
         padding: 16px 0 12px;
@@ -661,83 +727,122 @@
         font-size: 12px;
       }
 
-      /* Compact Table for Mobile - 100% Fit, Zero Cutoff */
+      /* Mobile Table: Smooth Touch Horizontal Scrolling, All Columns Visible */
       .table-container {
-        border-radius: 10px;
-        overflow-x: hidden; /* Perfect fit */
+        border-radius: 12px;
+      }
+
+      .table-scroll-wrapper {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
       }
 
       table {
-        table-layout: fixed;
+        min-width: 720px; /* Ensures all 11 columns have comfortable width */
         width: 100%;
       }
 
       th {
-        padding: 10px 4px;
-        font-size: 10px;
+        padding: 11px 8px;
+        font-size: 11px;
         text-align: center;
+      }
+
+      th:first-child {
+        text-align: left;
+        padding-left: 12px;
       }
 
       th:nth-child(2) {
         text-align: left;
-      }
-
-      th.hide-sm, .col-stat.hide-sm, th.hide-mob, td.col-form, td.col-form.hide-mob {
-        display: none !important;
+        padding-left: 10px;
       }
 
       td.col-rank {
-        width: 28px;
-        padding: 9px 2px 9px 8px;
-        font-size: 12.5px;
+        width: 42px;
+        padding: 11px 4px 11px 14px;
+        font-size: 13.5px;
         text-align: left;
       }
 
       td.col-club {
-        padding: 9px 4px;
-        width: auto;
+        padding: 11px 10px;
+        min-width: 185px;
       }
 
       .club-cell {
-        gap: 6px;
+        gap: 10px;
       }
 
       .crest-wrapper {
-        width: 22px;
-        height: 22px;
+        width: 26px;
+        height: 26px;
+      }
+
+      /* Clean separation prevents any name collisions or overlap */
+      .club-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 3px;
+        min-width: 0;
       }
 
       .club-name {
-        font-size: 12.5px;
-        line-height: 1.2;
+        display: block;
+        font-size: 13.5px;
+        font-weight: 700;
+        line-height: 1.25;
+        margin: 0;
+        padding: 0;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        color: #fff;
       }
 
       .gamer-handle {
-        font-size: 9px;
+        display: block;
+        font-size: 10.5px;
+        font-weight: 500;
+        line-height: 1.25;
+        margin: 0;
+        padding: 0;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        color: var(--text-dim);
       }
 
       td.col-stat {
-        width: 24px;
-        padding: 9px 2px;
-        font-size: 12px;
+        padding: 11px 8px;
+        font-size: 13px;
         text-align: center;
       }
 
       td.col-pts {
-        width: 32px;
-        padding: 9px 4px;
-        font-size: 14.5px;
+        padding: 11px 10px;
+        font-size: 15px;
         text-align: center;
       }
 
+      td.col-form {
+        padding: 11px 12px;
+        min-width: 145px;
+        display: table-cell !important;
+      }
+
+      .form-pills {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .form-pill {
+        width: 21px;
+        height: 21px;
+        font-size: 11px;
+        flex-shrink: 0;
+      }
+
       .table-footer {
-        padding: 10px 12px;
+        padding: 12px 14px;
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
@@ -745,14 +850,6 @@
 
       .legend-items {
         gap: 12px;
-      }
-
-      .legend-item {
-        font-size: 11px;
-      }
-
-      .last-updated {
-        font-size: 10px;
       }
 
       .legend-item {
@@ -831,28 +928,36 @@
       </div>
     </div>
 
+    <!-- Mobile Touch Scroll Cue Banner -->
+    <div class="mobile-scroll-cue">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 7h8m0 0l-3-3m3 3l-3 3m-2 7H6m0 0l3-3m-3 3l3 3"/></svg>
+      <span>Swipe table horizontally to view all stats &amp; Last 5 form</span>
+    </div>
+
     <!-- The Standings Table -->
     <div class="table-container">
-      <table id="standingsTable">
-        <thead>
-          <tr>
-            <th onclick="sortTable('rank')" style="width: 50px;">#</th>
-            <th onclick="sortTable('name')">Club / Manager</th>
-            <th class="text-center" onclick="sortTable('mp')" title="Matches Played">MP</th>
-            <th class="text-center" onclick="sortTable('w')" title="Wins">W</th>
-            <th class="text-center" onclick="sortTable('d')" title="Draws">D</th>
-            <th class="text-center" onclick="sortTable('l')" title="Losses">L</th>
-            <th class="text-center hide-sm" onclick="sortTable('gf')" title="Goals For">GF</th>
-            <th class="text-center hide-sm" onclick="sortTable('ga')" title="Goals Against">GA</th>
-            <th class="text-center" onclick="sortTable('gd')" title="Goal Difference">GD</th>
-            <th class="text-center" onclick="sortTable('pts')" title="Points">Pts</th>
-            <th class="hide-mob">Last 5</th>
-          </tr>
-        </thead>
-        <tbody id="standingsBody">
-          <!-- Rows rendered by JS -->
-        </tbody>
-      </table>
+      <div class="table-scroll-wrapper">
+        <table id="standingsTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('rank')" style="width: 44px;">#</th>
+              <th onclick="sortTable('name')">Club / Manager</th>
+              <th class="text-center" onclick="sortTable('mp')" title="Matches Played">MP</th>
+              <th class="text-center" onclick="sortTable('w')" title="Wins">W</th>
+              <th class="text-center" onclick="sortTable('d')" title="Draws">D</th>
+              <th class="text-center" onclick="sortTable('l')" title="Losses">L</th>
+              <th class="text-center" onclick="sortTable('gf')" title="Goals For">GF</th>
+              <th class="text-center" onclick="sortTable('ga')" title="Goals Against">GA</th>
+              <th class="text-center" onclick="sortTable('gd')" title="Goal Difference">GD</th>
+              <th class="text-center" onclick="sortTable('pts')" title="Points">Pts</th>
+              <th>Last 5</th>
+            </tr>
+          </thead>
+          <tbody id="standingsBody">
+            <!-- Rows rendered by JS -->
+          </tbody>
+        </table>
+      </div>
 
       <!-- Qualification Legend Footer -->
       <div class="table-footer">
@@ -1067,11 +1172,11 @@
           <td class="col-stat text-center">${team.w}</td>
           <td class="col-stat text-center">${team.d}</td>
           <td class="col-stat text-center">${team.l}</td>
-          <td class="col-stat text-center hide-sm">${team.gf}</td>
-          <td class="col-stat text-center hide-sm">${team.ga}</td>
+          <td class="col-stat text-center">${team.gf}</td>
+          <td class="col-stat text-center">${team.ga}</td>
           <td class="col-stat text-center ${gdClass}">${gdDisplay}</td>
           <td class="col-pts text-center ${rank === 1 && !allZero ? 'top-rank-pts' : ''}">${team.pts}</td>
-          <td class="col-form hide-mob">
+          <td class="col-form">
             <div class="form-pills">${formHtml}</div>
           </td>
         `;
