@@ -260,14 +260,14 @@
 
     table {
       width: 100%;
-      min-width: 720px;
-      border-collapse: collapse;
+      min-width: 680px;
+      border-collapse: separate;
+      border-spacing: 0;
       text-align: left;
     }
 
     thead {
       background: #0a0f1d;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     th {
@@ -280,6 +280,7 @@
       user-select: none;
       white-space: nowrap;
       cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     th:hover {
@@ -303,10 +304,12 @@
     }
 
     tbody tr {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.035);
       cursor: pointer;
-      contain: content;
       transition: background-color 0.12s ease;
+    }
+
+    tbody td {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.035);
     }
 
     tbody tr:nth-child(even) {
@@ -317,11 +320,58 @@
       background: var(--card-hover) !important;
     }
 
+    /* ========================================================
+       FROZEN / STICKY COLUMNS (Rank & Club Name stay fixed while scrolling)
+       ======================================================== */
+    th.col-sticky-rank,
+    td.col-sticky-rank {
+      position: sticky;
+      left: 0;
+      z-index: 10;
+      width: 42px;
+      min-width: 42px;
+      max-width: 42px;
+      box-sizing: border-box;
+    }
+
+    th.col-sticky-club,
+    td.col-sticky-club {
+      position: sticky;
+      left: 42px;
+      z-index: 10;
+      min-width: 180px;
+      border-right: 1px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: 4px 0 10px -2px rgba(0, 0, 0, 0.55);
+      box-sizing: border-box;
+    }
+
+    /* Solid Opaque Backgrounds to prevent content bleed during horizontal swipe */
+    thead th.col-sticky-rank,
+    thead th.col-sticky-club {
+      background: #0a0f1d !important;
+      z-index: 20;
+    }
+
+    tbody tr td.col-sticky-rank,
+    tbody tr td.col-sticky-club {
+      background: #0c1220;
+    }
+
+    tbody tr:nth-child(even) td.col-sticky-rank,
+    tbody tr:nth-child(even) td.col-sticky-club {
+      background: #080d18;
+    }
+
+    tbody tr:hover td.col-sticky-rank,
+    tbody tr:hover td.col-sticky-club {
+      background: #192644 !important;
+    }
+
     /* Rank with Left Qualification Bar */
     td.col-rank {
-      position: relative;
-      width: 46px;
-      padding-left: 20px;
+      position: sticky;
+      left: 0;
+      padding-left: 18px;
       font-weight: 700;
       font-size: 14px;
       color: var(--text-muted);
@@ -337,6 +387,7 @@
       bottom: 0;
       width: 4px;
       background: var(--playoff-blue);
+      z-index: 12;
     }
 
     /* BOTTOM 2 RELEGATION: Red Indicator (Rank 11-12) */
@@ -348,6 +399,7 @@
       bottom: 0;
       width: 4px;
       background: var(--relegation-red);
+      z-index: 12;
     }
 
     /* Club & Crest Column */
@@ -738,45 +790,61 @@
       }
 
       table {
-        min-width: 720px; /* Ensures all 11 columns have comfortable width */
+        min-width: 580px; /* Scaled so Last 5 and Pts fit right beside frozen club names */
         width: 100%;
       }
 
       th {
-        padding: 11px 8px;
-        font-size: 11px;
+        padding: 10px 5px;
+        font-size: 10.5px;
         text-align: center;
+      }
+
+      /* Mobile Frozen Columns */
+      th.col-sticky-rank,
+      td.col-sticky-rank {
+        width: 36px;
+        min-width: 36px;
+        max-width: 36px;
+        left: 0;
+      }
+
+      th.col-sticky-club,
+      td.col-sticky-club {
+        left: 36px;
+        min-width: 145px;
+        max-width: 155px;
+        border-right: 2px solid rgba(255, 255, 255, 0.16) !important;
+        box-shadow: 5px 0 12px -2px rgba(0, 0, 0, 0.7);
       }
 
       th:first-child {
         text-align: left;
-        padding-left: 12px;
+        padding-left: 10px;
       }
 
       th:nth-child(2) {
         text-align: left;
-        padding-left: 10px;
+        padding-left: 8px;
       }
 
       td.col-rank {
-        width: 42px;
-        padding: 11px 4px 11px 14px;
-        font-size: 13.5px;
+        padding: 10px 2px 10px 10px;
+        font-size: 13px;
         text-align: left;
       }
 
       td.col-club {
-        padding: 11px 10px;
-        min-width: 185px;
+        padding: 10px 8px;
       }
 
       .club-cell {
-        gap: 10px;
+        gap: 7px;
       }
 
       .crest-wrapper {
-        width: 26px;
-        height: 26px;
+        width: 22px;
+        height: 22px;
       }
 
       /* Clean separation prevents any name collisions or overlap */
@@ -784,60 +852,64 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 3px;
+        gap: 2px;
         min-width: 0;
       }
 
       .club-name {
         display: block;
-        font-size: 13.5px;
+        font-size: 12.5px;
         font-weight: 700;
         line-height: 1.25;
         margin: 0;
         padding: 0;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         color: #fff;
       }
 
       .gamer-handle {
         display: block;
-        font-size: 10.5px;
+        font-size: 9.5px;
         font-weight: 500;
         line-height: 1.25;
         margin: 0;
         padding: 0;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         color: var(--text-dim);
       }
 
       td.col-stat {
-        padding: 11px 8px;
-        font-size: 13px;
+        padding: 10px 4px;
+        font-size: 12px;
         text-align: center;
       }
 
       td.col-pts {
-        padding: 11px 10px;
-        font-size: 15px;
+        padding: 10px 6px;
+        font-size: 14px;
         text-align: center;
       }
 
       td.col-form {
-        padding: 11px 12px;
-        min-width: 145px;
+        padding: 10px 6px;
+        min-width: 110px;
         display: table-cell !important;
       }
 
       .form-pills {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 3px;
       }
 
       .form-pill {
-        width: 21px;
-        height: 21px;
-        font-size: 11px;
+        width: 18px;
+        height: 18px;
+        font-size: 9.5px;
         flex-shrink: 0;
       }
 
@@ -931,7 +1003,7 @@
     <!-- Mobile Touch Scroll Cue Banner -->
     <div class="mobile-scroll-cue">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 7h8m0 0l-3-3m3 3l-3 3m-2 7H6m0 0l3-3m-3 3l3 3"/></svg>
-      <span>Swipe table horizontally to view all stats &amp; Last 5 form</span>
+      <span>Swipe horizontally • Club names stay frozen for easy tracking</span>
     </div>
 
     <!-- The Standings Table -->
@@ -940,8 +1012,8 @@
         <table id="standingsTable">
           <thead>
             <tr>
-              <th onclick="sortTable('rank')" style="width: 44px;">#</th>
-              <th onclick="sortTable('name')">Club / Manager</th>
+              <th class="col-sticky-rank" onclick="sortTable('rank')">#</th>
+              <th class="col-sticky-club" onclick="sortTable('name')">Club / Manager</th>
               <th class="text-center" onclick="sortTable('mp')" title="Matches Played">MP</th>
               <th class="text-center" onclick="sortTable('w')" title="Wins">W</th>
               <th class="text-center" onclick="sortTable('d')" title="Draws">D</th>
@@ -1158,8 +1230,8 @@
         }
 
         tr.innerHTML = `
-          <td class="col-rank">${rank}</td>
-          <td class="col-club">
+          <td class="col-rank col-sticky-rank">${rank}</td>
+          <td class="col-club col-sticky-club">
             <div class="club-cell">
               <div class="crest-wrapper">${team.crest}</div>
               <div class="club-details">
