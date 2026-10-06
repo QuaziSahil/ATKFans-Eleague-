@@ -661,6 +661,350 @@
       color: #fff;
     }
 
+    /* ========================================================
+       MAIN NAVIGATION BAR (Standings vs Match Day 1)
+       ======================================================== */
+    .main-nav-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 14px;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: rgba(14, 21, 38, 0.85);
+      border: 1px solid var(--card-border);
+      padding: 11px 20px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+
+    .nav-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(25, 38, 68, 0.8);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, rgba(200, 16, 46, 0.22), rgba(245, 166, 35, 0.18));
+      border-color: var(--atk-gold);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(245, 166, 35, 0.18);
+    }
+
+    .nav-btn .nav-icon {
+      font-size: 17px;
+    }
+
+    .nav-btn .nav-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--atk-gold);
+      font-weight: 700;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .tab-view {
+      display: block;
+    }
+
+    /* ========================================================
+       MATCH DAY FIXTURES SECTION
+       ======================================================== */
+    .fixtures-header-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .fixtures-title-block h2 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .fixtures-title-block p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .fixtures-controls-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .fixtures-view-toggle {
+      display: flex;
+      background: rgba(10, 15, 29, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .view-toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 7px 15px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .view-toggle-btn.active {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Fixtures Duel Cards Grid */
+    .fixtures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .match-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      transition: transform 0.18s ease, border-color 0.18s ease;
+    }
+
+    .match-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(245, 166, 35, 0.45);
+      background: var(--card-hover);
+    }
+
+    .match-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .match-tags {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-match-num {
+      background: rgba(245, 166, 35, 0.14);
+      color: var(--atk-gold);
+      border: 1px solid rgba(245, 166, 35, 0.35);
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .badge-leg {
+      background: rgba(0, 136, 255, 0.14);
+      color: var(--playoff-blue);
+      border: 1px solid rgba(0, 136, 255, 0.35);
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .match-status {
+      font-size: 10.5px;
+      color: var(--text-dim);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .match-clash {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .match-team {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    .match-team.team-away {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    .match-team-crest {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .match-team-crest svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .match-team-info {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .match-team-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 1.25;
+    }
+
+    .match-team-gamer {
+      font-size: 10px;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .match-vs-pill {
+      background: linear-gradient(135deg, rgba(200, 16, 46, 0.28), rgba(245, 166, 35, 0.24));
+      border: 1px solid rgba(245, 166, 35, 0.45);
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: 1px;
+      padding: 4px 11px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      text-shadow: 0 0 8px rgba(245, 166, 35, 0.5);
+    }
+
+    /* Spreadsheet Table View (Exact layout from user spreadsheet) */
+    .fixtures-table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+      margin-bottom: 24px;
+    }
+
+    .fixtures-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .fixtures-table thead th {
+      padding: 13px 16px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #0c121e;
+      background: #7bf5c6; /* Mint-green header from user spreadsheet */
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-right: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: 2px solid #36c793;
+    }
+
+    .fixtures-table thead th:last-child {
+      border-right: none;
+    }
+
+    .fixtures-table tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background-color 0.12s ease;
+      cursor: pointer;
+    }
+
+    .fixtures-table tbody tr:nth-child(even) {
+      background: var(--row-zebra);
+    }
+
+    .fixtures-table tbody tr:hover {
+      background: var(--card-hover);
+    }
+
+    .fixtures-table td {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: #f0f4fc;
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .fixtures-table td:last-child {
+      border-right: none;
+    }
+
+    .fixtures-table td.col-pname {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .fixtures-player-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     /* Mobile Touch Scroll Cue Banner */
     .mobile-scroll-cue {
       display: none;
@@ -954,6 +1298,105 @@
       .detail-item strong {
         font-size: 15px;
       }
+
+      /* Main Navigation Bar Mobile */
+      .main-nav-bar {
+        gap: 8px;
+        margin-bottom: 16px;
+        padding-bottom: 10px;
+      }
+
+      .nav-btn {
+        flex: 1;
+        padding: 9px 10px;
+        font-size: 12px;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .nav-btn .nav-icon {
+        font-size: 15px;
+      }
+
+      .nav-btn .nav-badge {
+        font-size: 9.5px;
+        padding: 1px 6px;
+      }
+
+      /* Fixtures Header Mobile */
+      .fixtures-header-card {
+        padding: 14px 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .fixtures-title-block h2 {
+        font-size: 17px;
+      }
+
+      .fixtures-title-block p {
+        font-size: 11px;
+      }
+
+      .fixtures-controls-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .fixtures-view-toggle {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .view-toggle-btn {
+        flex: 1;
+        text-align: center;
+        padding: 6px 8px;
+        font-size: 11px;
+      }
+
+      /* Fixtures Grid Mobile */
+      .fixtures-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .match-card {
+        padding: 12px 14px;
+      }
+
+      .match-team {
+        gap: 8px;
+      }
+
+      .match-team-crest {
+        width: 26px;
+        height: 26px;
+      }
+
+      .match-team-name {
+        font-size: 12.5px;
+      }
+
+      .match-team-gamer {
+        font-size: 9.5px;
+      }
+
+      .match-vs-pill {
+        padding: 3px 8px;
+        font-size: 10.5px;
+      }
+
+      .fixtures-table {
+        min-width: 480px;
+      }
+
+      .fixtures-table thead th,
+      .fixtures-table td {
+        padding: 10px 10px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -986,66 +1429,129 @@
       </div>
     </header>
 
-    <!-- Filter & Search Controls -->
-    <div class="controls-panel">
-      <div class="tab-pills">
-        <button class="tab-pill active" onclick="filterZone('all', this)">All Teams (12)</button>
-        <button class="tab-pill" onclick="filterZone('playoffs', this)">🔵 Top 6 (Playoffs)</button>
-        <button class="tab-pill" onclick="filterZone('relegation', this)">🔴 Relegation (11-12)</button>
-      </div>
-
-      <div class="search-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" id="teamSearch" placeholder="Search team..." oninput="handleSearch(this.value)">
-      </div>
+    <!-- Main Section Navigation: League Standings vs Match Day 1 -->
+    <div class="main-nav-bar">
+      <button class="nav-btn active" id="btnTabStandings" onclick="switchView('standings')">
+        <span class="nav-icon">🏆</span>
+        <span class="nav-label">League Standings</span>
+        <span class="nav-badge">16 Teams</span>
+      </button>
+      <button class="nav-btn" id="btnTabFixtures" onclick="switchView('fixtures')">
+        <span class="nav-icon">⚔️</span>
+        <span class="nav-label">Match Day 1</span>
+        <span class="nav-badge">8 Matches</span>
+      </button>
     </div>
 
-    <!-- Mobile Touch Scroll Cue Banner -->
-    <div class="mobile-scroll-cue">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 7h8m0 0l-3-3m3 3l-3 3m-2 7H6m0 0l3-3m-3 3l3 3"/></svg>
-      <span>Swipe horizontally • Club names stay frozen for easy tracking</span>
-    </div>
-
-    <!-- The Standings Table -->
-    <div class="table-container">
-      <div class="table-scroll-wrapper">
-        <table id="standingsTable">
-          <thead>
-            <tr>
-              <th class="col-sticky-rank" onclick="sortTable('rank')">#</th>
-              <th class="col-sticky-club" onclick="sortTable('name')">Club / Manager</th>
-              <th class="text-center" onclick="sortTable('mp')" title="Matches Played">MP</th>
-              <th class="text-center" onclick="sortTable('w')" title="Wins">W</th>
-              <th class="text-center" onclick="sortTable('d')" title="Draws">D</th>
-              <th class="text-center" onclick="sortTable('l')" title="Losses">L</th>
-              <th class="text-center" onclick="sortTable('gf')" title="Goals For">GF</th>
-              <th class="text-center" onclick="sortTable('ga')" title="Goals Against">GA</th>
-              <th class="text-center" onclick="sortTable('gd')" title="Goal Difference">GD</th>
-              <th class="text-center" onclick="sortTable('pts')" title="Points">Pts</th>
-              <th>Last 5</th>
-            </tr>
-          </thead>
-          <tbody id="standingsBody">
-            <!-- Rows rendered by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Qualification Legend Footer -->
-      <div class="table-footer">
-        <div class="legend-items">
-          <div class="legend-item">
-            <span class="legend-dot legend-blue"></span>
-            <span>Championship Playoffs (Rank 1 – 6)</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-red"></span>
-            <span>Relegation Play-down (Rank 11 – 12)</span>
-          </div>
+    <!-- VIEW 1: STANDINGS POINTS TABLE -->
+    <div id="viewStandings" class="tab-view">
+      <!-- Filter & Search Controls -->
+      <div class="controls-panel">
+        <div class="tab-pills">
+          <button class="tab-pill active" onclick="filterZone('all', this)">All Teams (16)</button>
+          <button class="tab-pill" onclick="filterZone('playoffs', this)">🔵 Top 6 (Playoffs)</button>
+          <button class="tab-pill" onclick="filterZone('relegation', this)">🔴 Relegation (15-16)</button>
         </div>
 
-        <div class="last-updated">
-          <span id="matchdayFooter">12 Teams Registered • Pre-Season Standings</span>
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="teamSearch" placeholder="Search team..." oninput="handleSearch(this.value)">
+        </div>
+      </div>
+
+      <!-- Mobile Touch Scroll Cue Banner -->
+      <div class="mobile-scroll-cue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 7h8m0 0l-3-3m3 3l-3 3m-2 7H6m0 0l3-3m-3 3l3 3"/></svg>
+        <span>Swipe horizontally • Club names stay frozen for easy tracking</span>
+      </div>
+
+      <!-- The Standings Table -->
+      <div class="table-container">
+        <div class="table-scroll-wrapper">
+          <table id="standingsTable">
+            <thead>
+              <tr>
+                <th class="col-sticky-rank" onclick="sortTable('rank')">#</th>
+                <th class="col-sticky-club" onclick="sortTable('name')">Club / Manager</th>
+                <th class="text-center" onclick="sortTable('mp')" title="Matches Played">MP</th>
+                <th class="text-center" onclick="sortTable('w')" title="Wins">W</th>
+                <th class="text-center" onclick="sortTable('d')" title="Draws">D</th>
+                <th class="text-center" onclick="sortTable('l')" title="Losses">L</th>
+                <th class="text-center" onclick="sortTable('gf')" title="Goals For">GF</th>
+                <th class="text-center" onclick="sortTable('ga')" title="Goals Against">GA</th>
+                <th class="text-center" onclick="sortTable('gd')" title="Goal Difference">GD</th>
+                <th class="text-center" onclick="sortTable('pts')" title="Points">Pts</th>
+                <th>Last 5</th>
+              </tr>
+            </thead>
+            <tbody id="standingsBody">
+              <!-- Rows rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Qualification Legend Footer -->
+        <div class="table-footer">
+          <div class="legend-items">
+            <div class="legend-item">
+              <span class="legend-dot legend-blue"></span>
+              <span>Championship Playoffs (Rank 1 – 6)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot legend-red"></span>
+              <span>Relegation Play-down (Rank 15 – 16)</span>
+            </div>
+          </div>
+
+          <div class="last-updated">
+            <span id="matchdayFooter">16 Elite Players Registered • Pre-Season Standings</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: MATCH DAY 1 FIXTURES -->
+    <div id="viewFixtures" class="tab-view" style="display: none;">
+      <!-- Fixtures Header Card with View Switcher -->
+      <div class="fixtures-header-card">
+        <div class="fixtures-title-block">
+          <h2>
+            <span>⚔️ MATCH DAY 1</span>
+            <span class="badge-leg" style="font-size: 11px; padding: 3px 9px;">LEG 1</span>
+          </h2>
+          <p>8 Official Opening Fixtures • Player 1 vs Player 2 Showdowns</p>
+        </div>
+
+        <div class="fixtures-controls-right">
+          <div class="fixtures-view-toggle">
+            <button class="view-toggle-btn active" id="btnToggleCards" onclick="toggleFixturesMode('cards')">🎴 Duel Cards</button>
+            <button class="view-toggle-btn" id="btnToggleTable" onclick="toggleFixturesMode('table')">📋 Spreadsheet Table</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Duel Cards Grid Container -->
+      <div id="fixturesCardsContainer" class="fixtures-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Spreadsheet Table Container (Exact Layout from Screenshot) -->
+      <div id="fixturesTableContainer" class="fixtures-table-card" style="display: none;">
+        <div class="table-scroll-wrapper">
+          <table class="fixtures-table">
+            <thead>
+              <tr>
+                <th style="width: 110px; text-align: center;">Match Day</th>
+                <th style="width: 95px; text-align: center;">Match #</th>
+                <th style="width: 85px; text-align: center;">Leg</th>
+                <th>Player 1</th>
+                <th>Player 2</th>
+              </tr>
+            </thead>
+            <tbody id="fixturesTableBody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -1125,7 +1631,7 @@
       }
     }
 
-    // Official ATK Fans eFootball League Roster (12 Teams)
+    // Official ATK Fans eFootball League Roster (16 Teams)
     // You can update the stats directly in this array anytime!
     const leagueData = [
       { id: 1, name: "Dibyendu", gamer: "Dibyendu_FC", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#c8102e', '#f5a623', 'shield', 'DIB') },
@@ -1139,7 +1645,23 @@
       { id: 9, name: "Romit", gamer: "Romit_Squad", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#004d40', '#69f0ae', 'shield', 'RMT') },
       { id: 10, name: "Ankit", gamer: "Ankit_Dynamos", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#4a0e17', '#ffd700', 'circle', 'ANK') },
       { id: 11, name: "Sahil", gamer: "Sahil_ATK", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#b71c1c', '#ffffff', 'stripes', 'SHL') },
-      { id: 12, name: "Anindya", gamer: "Anindya_Warriors", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#1a237e', '#40c4ff', 'polygon', 'AND') }
+      { id: 12, name: "Anindya", gamer: "Anindya_Warriors", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#1a237e', '#40c4ff', 'polygon', 'AND') },
+      { id: 13, name: "Aritra", gamer: "Aritra_FC", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#1b5e20', '#66bb6a', 'shield', 'ART') },
+      { id: 14, name: "Biki", gamer: "Biki_XI", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#4a148c', '#ce93d8', 'circle', 'BIK') },
+      { id: 15, name: "Priyanshu", gamer: "Priyanshu_United", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#bf360c', '#ff8a65', 'stripes', 'PRY') },
+      { id: 16, name: "Soumyadeep", gamer: "Soumyadeep_Strikers", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#006064', '#4dd0e1', 'polygon', 'SMD') }
+    ];
+
+    // Official Match Day 1 Fixtures (Matches spreadsheet exactly)
+    const matchDayFixtures = [
+      { matchDay: 1, matchNum: 1, leg: 1, p1: "Dibyendu", p2: "Aritra" },
+      { matchDay: 1, matchNum: 2, leg: 1, p1: "Kaustab", p2: "Biki" },
+      { matchDay: 1, matchNum: 3, leg: 1, p1: "Rishiraj", p2: "Priyanshu" },
+      { matchDay: 1, matchNum: 4, leg: 1, p1: "Rex Sayan", p2: "Anindya" },
+      { matchDay: 1, matchNum: 5, leg: 1, p1: "Debu", p2: "Soumyadeep" },
+      { matchDay: 1, matchNum: 6, leg: 1, p1: "Rahul", p2: "Sahil" },
+      { matchDay: 1, matchNum: 7, leg: 1, p1: "Tutun", p2: "Ankit" },
+      { matchDay: 1, matchNum: 8, leg: 1, p1: "Prakash", p2: "Romit" }
     ];
 
     let sortColumn = 'pts';
@@ -1149,6 +1671,127 @@
 
     function init() {
       renderTable();
+      renderFixtures();
+    }
+
+    function getTeamByName(name) {
+      return leagueData.find(t => t.name.toLowerCase() === name.toLowerCase()) || {
+        name: name,
+        gamer: name + '_FC',
+        crest: generateCrestSVG('#374151', '#9ca3af', 'shield', name.substring(0, 3).toUpperCase())
+      };
+    }
+
+    function switchView(view) {
+      const viewStandings = document.getElementById('viewStandings');
+      const viewFixtures = document.getElementById('viewFixtures');
+      const btnStandings = document.getElementById('btnTabStandings');
+      const btnFixtures = document.getElementById('btnTabFixtures');
+
+      if (view === 'standings') {
+        viewStandings.style.display = 'block';
+        viewFixtures.style.display = 'none';
+        btnStandings.classList.add('active');
+        btnFixtures.classList.remove('active');
+      } else {
+        viewStandings.style.display = 'none';
+        viewFixtures.style.display = 'block';
+        btnStandings.classList.remove('active');
+        btnFixtures.classList.add('active');
+        renderFixtures();
+      }
+    }
+
+    function toggleFixturesMode(mode) {
+      const cardsView = document.getElementById('fixturesCardsContainer');
+      const tableView = document.getElementById('fixturesTableContainer');
+      const btnCards = document.getElementById('btnToggleCards');
+      const btnTable = document.getElementById('btnToggleTable');
+
+      if (mode === 'cards') {
+        cardsView.style.display = 'grid';
+        tableView.style.display = 'none';
+        btnCards.classList.add('active');
+        btnTable.classList.remove('active');
+      } else {
+        cardsView.style.display = 'none';
+        tableView.style.display = 'block';
+        btnCards.classList.remove('active');
+        btnTable.classList.add('active');
+      }
+    }
+
+    function renderFixtures() {
+      const cardsContainer = document.getElementById('fixturesCardsContainer');
+      const tableBody = document.getElementById('fixturesTableBody');
+      if (!cardsContainer || !tableBody) return;
+
+      cardsContainer.innerHTML = '';
+      tableBody.innerHTML = '';
+
+      matchDayFixtures.forEach(m => {
+        const team1 = getTeamByName(m.p1);
+        const team2 = getTeamByName(m.p2);
+
+        // 1. Duel Card
+        const card = document.createElement('div');
+        card.className = 'match-card';
+        card.innerHTML = `
+          <div class="match-card-meta">
+            <div class="match-tags">
+              <span class="badge-match-num">MATCH #${m.matchNum}</span>
+              <span class="badge-leg">LEG ${m.leg}</span>
+            </div>
+            <span class="match-status">MATCH DAY ${m.matchDay}</span>
+          </div>
+          <div class="match-clash">
+            <div class="match-team team-home" onclick="showTeamDetailsByName('${m.p1}')">
+              <div class="match-team-crest">${team1.crest}</div>
+              <div class="match-team-info">
+                <span class="match-team-name">${team1.name}</span>
+                <span class="match-team-gamer">${team1.gamer}</span>
+              </div>
+            </div>
+            <div class="match-vs-pill">VS</div>
+            <div class="match-team team-away" onclick="showTeamDetailsByName('${m.p2}')">
+              <div class="match-team-crest">${team2.crest}</div>
+              <div class="match-team-info">
+                <span class="match-team-name">${team2.name}</span>
+                <span class="match-team-gamer">${team2.gamer}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        cardsContainer.appendChild(card);
+
+        // 2. Spreadsheet Table Row
+        const tr = document.createElement('tr');
+        tr.onclick = () => showTeamDetailsByName(m.p1);
+        tr.innerHTML = `
+          <td style="text-align: center; font-weight: 700;">${m.matchDay}</td>
+          <td style="text-align: center; font-weight: 800; color: var(--atk-gold); font-family: 'Rajdhani', sans-serif; font-size: 15px;">${m.matchNum}</td>
+          <td style="text-align: center; font-weight: 800; color: var(--playoff-blue); font-family: 'Rajdhani', sans-serif; font-size: 15px;">${m.leg}</td>
+          <td class="col-pname">
+            <div class="fixtures-player-cell">
+              <div class="crest-wrapper" style="width: 24px; height: 24px; flex-shrink: 0;">${team1.crest}</div>
+              <span>${m.p1}</span>
+            </div>
+          </td>
+          <td class="col-pname">
+            <div class="fixtures-player-cell">
+              <div class="crest-wrapper" style="width: 24px; height: 24px; flex-shrink: 0;">${team2.crest}</div>
+              <span>${m.p2}</span>
+            </div>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function showTeamDetailsByName(name) {
+      const team = getTeamByName(name);
+      const rank = leagueData.indexOf(team) + 1;
+      showTeamDetails(team, rank > 0 ? rank : 1);
     }
 
     function renderTable() {
@@ -1186,7 +1829,7 @@
         }
 
         if (activeFilter === 'playoffs') return rank <= 6;
-        if (activeFilter === 'relegation') return rank >= 11;
+        if (activeFilter === 'relegation') return rank >= 15;
         return true;
       });
 
@@ -1198,7 +1841,7 @@
         // Qualification Zone classes: TOP 6 PLAYOFFS, BOTTOM 2 RELEGATION
         if (rank <= 6) {
           tr.classList.add('zone-playoffs');
-        } else if (rank >= 11) {
+        } else if (rank >= 15) {
           tr.classList.add('zone-relegation');
         }
 
@@ -1261,7 +1904,7 @@
       const footerElem = document.getElementById('matchdayFooter');
       if (footerElem) {
         footerElem.textContent = totalMatches === 0 
-          ? '12 Elite Players • The Greatest eFootball Warriors in History' 
+          ? '16 Elite Players Registered • Pre-Season Standings' 
           : `${totalMatches} Matches Played • Live Standings`;
       }
     }
@@ -1311,7 +1954,7 @@
       if (rank <= 6) {
         statusElem.textContent = 'Top 6 Playoff Spot';
         statusElem.style.color = 'var(--playoff-blue)';
-      } else if (rank >= 11) {
+      } else if (rank >= 15) {
         statusElem.textContent = 'Relegation Zone';
         statusElem.style.color = 'var(--relegation-red)';
       } else {
@@ -1320,14 +1963,21 @@
       }
 
       const historyContainer = document.getElementById('modalHistory');
-      if (!team.form || team.form.length === 0) {
-        historyContainer.innerHTML = '<span style="font-size:12px; color:var(--text-dim);">No matches played yet.</span>';
+      const fixture = matchDayFixtures.find(m => m.p1.toLowerCase() === team.name.toLowerCase() || m.p2.toLowerCase() === team.name.toLowerCase());
+      if (fixture) {
+        const opponent = fixture.p1.toLowerCase() === team.name.toLowerCase() ? fixture.p2 : fixture.p1;
+        const oppTeam = getTeamByName(opponent);
+        historyContainer.innerHTML = `
+          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <span style="font-size: 10px; color: var(--atk-gold); font-weight: 800; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px;">MATCH DAY ${fixture.matchDay} • MATCH #${fixture.matchNum} (LEG ${fixture.leg})</span>
+              <div style="font-size: 13.5px; font-weight: 700; color: #fff; margin-top: 2px;">vs ${oppTeam.name} (${oppTeam.gamer})</div>
+            </div>
+            <div class="crest-wrapper" style="width: 28px; height: 28px; flex-shrink: 0;">${oppTeam.crest}</div>
+          </div>
+        `;
       } else {
-        historyContainer.innerHTML = team.form.map((res) => {
-          let cls = res === 'w' ? 'form-w' : (res === 'l' ? 'form-l' : 'form-d');
-          let txt = res === 'w' ? '✓' : (res === 'l' ? '✕' : '–');
-          return `<div class="form-pill ${cls}" style="width: 24px; height: 24px; font-size: 12px;">${txt}</div>`;
-        }).join('');
+        historyContainer.innerHTML = '<span style="font-size:12px; color:var(--text-dim);">No scheduled fixture.</span>';
       }
 
       document.getElementById('teamModal').classList.add('active');
