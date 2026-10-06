@@ -378,7 +378,7 @@
       font-family: 'Rajdhani', sans-serif;
     }
 
-    /* TOP 6 PLAYOFFS: Blue Indicator (Rank 1-6) */
+    /* TOP 8 QUALIFIERS: Blue Indicator (Rank 1-8) */
     tr.zone-playoffs td.col-rank::before {
       content: '';
       position: absolute;
@@ -390,7 +390,7 @@
       z-index: 12;
     }
 
-    /* BOTTOM 2 RELEGATION: Red Indicator (Rank 11-12) */
+    /* BOTTOM 2 RELEGATION: Red Indicator (Rank 15-16) */
     tr.zone-relegation td.col-rank::before {
       content: '';
       position: absolute;
@@ -937,6 +937,75 @@
       text-shadow: 0 0 8px rgba(245, 166, 35, 0.5);
     }
 
+    .match-score-pill {
+      background: linear-gradient(135deg, rgba(0, 210, 106, 0.22), rgba(14, 21, 38, 0.95));
+      border: 1px solid rgba(0, 210, 106, 0.65);
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 1.5px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(0, 210, 106, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .score-num {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-muted);
+    }
+
+    .score-num.score-winner {
+      color: #26e792;
+      font-size: 18px;
+      text-shadow: 0 0 10px rgba(38, 231, 146, 0.8);
+    }
+
+    .score-dash {
+      color: var(--text-dim);
+      font-size: 13px;
+    }
+
+    .badge-winner-tag {
+      font-size: 9.5px;
+      font-weight: 800;
+      background: rgba(0, 210, 106, 0.15);
+      color: #00d26a;
+      border: 1px solid rgba(0, 210, 106, 0.4);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .score-badge-table {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-family: 'Rajdhani', sans-serif;
+      margin-left: auto;
+    }
+
+    .score-badge-table.winner {
+      background: rgba(0, 210, 106, 0.2);
+      color: #00d26a;
+      border: 1px solid rgba(0, 210, 106, 0.4);
+    }
+
+    .score-badge-table.loser {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
     /* Spreadsheet Table View (Exact layout from user spreadsheet) */
     .fixtures-table-card {
       background: var(--card-bg);
@@ -1449,7 +1518,7 @@
       <div class="controls-panel">
         <div class="tab-pills">
           <button class="tab-pill active" onclick="filterZone('all', this)">All Teams (16)</button>
-          <button class="tab-pill" onclick="filterZone('playoffs', this)">🔵 Top 6 (Playoffs)</button>
+          <button class="tab-pill" onclick="filterZone('playoffs', this)">🔵 Top 8 (Next Round)</button>
           <button class="tab-pill" onclick="filterZone('relegation', this)">🔴 Relegation (15-16)</button>
         </div>
 
@@ -1495,7 +1564,7 @@
           <div class="legend-items">
             <div class="legend-item">
               <span class="legend-dot legend-blue"></span>
-              <span>Championship Playoffs (Rank 1 – 6)</span>
+              <span>Next Round Qualifiers (Rank 1 – 8)</span>
             </div>
             <div class="legend-item">
               <span class="legend-dot legend-red"></span>
@@ -1592,7 +1661,7 @@
         </div>
         <div class="detail-item">
           <span>Status</span>
-          <strong id="modalStatus" style="color: var(--playoff-blue);">Playoff Contender</strong>
+          <strong id="modalStatus" style="color: var(--playoff-blue);">Next Round Contender</strong>
         </div>
       </div>
 
@@ -1639,12 +1708,12 @@
       { id: 3, name: "Rishiraj", gamer: "Rishiraj_FC", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#00796b', '#ffca28', 'stripes', 'RSH') },
       { id: 4, name: "Rex Sayan", gamer: "Rex_Sayan", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#4a148c', '#e040fb', 'polygon', 'REX') },
       { id: 5, name: "Debu", gamer: "Debu_Strikers", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#e65100', '#ffd600', 'shield', 'DEB') },
-      { id: 6, name: "Rahul", gamer: "Rahul_United", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#212121', '#ffffff', 'stripes', 'RHL') },
+      { id: 6, name: "Rahul", gamer: "Rahul_United", mp: 1, w: 1, d: 0, l: 0, gf: 1, ga: 0, gd: 1, pts: 3, form: ['w'], crest: generateCrestSVG('#212121', '#ffffff', 'stripes', 'RHL') },
       { id: 7, name: "Tutun", gamer: "Tutun_Blasters", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#880e4f', '#ff4081', 'circle', 'TTN') },
       { id: 8, name: "Prakash", gamer: "Prakash_Kings", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#01579b', '#ffab00', 'polygon', 'PRK') },
       { id: 9, name: "Romit", gamer: "Romit_Squad", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#004d40', '#69f0ae', 'shield', 'RMT') },
       { id: 10, name: "Ankit", gamer: "Ankit_Dynamos", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#4a0e17', '#ffd700', 'circle', 'ANK') },
-      { id: 11, name: "Sahil", gamer: "Sahil_ATK", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#b71c1c', '#ffffff', 'stripes', 'SHL') },
+      { id: 11, name: "Sahil", gamer: "Sahil_ATK", mp: 1, w: 0, d: 0, l: 1, gf: 0, ga: 1, gd: -1, pts: 0, form: ['l'], crest: generateCrestSVG('#b71c1c', '#ffffff', 'stripes', 'SHL') },
       { id: 12, name: "Anindya", gamer: "Anindya_Warriors", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#1a237e', '#40c4ff', 'polygon', 'AND') },
       { id: 13, name: "Aritra", gamer: "Aritra_FC", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#1b5e20', '#66bb6a', 'shield', 'ART') },
       { id: 14, name: "Biki", gamer: "Biki_XI", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#4a148c', '#ce93d8', 'circle', 'BIK') },
@@ -1654,14 +1723,14 @@
 
     // Official Match Day 1 Fixtures (Matches spreadsheet exactly)
     const matchDayFixtures = [
-      { matchDay: 1, matchNum: 1, leg: 1, p1: "Dibyendu", p2: "Aritra" },
-      { matchDay: 1, matchNum: 2, leg: 1, p1: "Kaustab", p2: "Biki" },
-      { matchDay: 1, matchNum: 3, leg: 1, p1: "Rishiraj", p2: "Priyanshu" },
-      { matchDay: 1, matchNum: 4, leg: 1, p1: "Rex Sayan", p2: "Anindya" },
-      { matchDay: 1, matchNum: 5, leg: 1, p1: "Debu", p2: "Soumyadeep" },
-      { matchDay: 1, matchNum: 6, leg: 1, p1: "Rahul", p2: "Sahil" },
-      { matchDay: 1, matchNum: 7, leg: 1, p1: "Tutun", p2: "Ankit" },
-      { matchDay: 1, matchNum: 8, leg: 1, p1: "Prakash", p2: "Romit" }
+      { matchDay: 1, matchNum: 1, leg: 1, p1: "Dibyendu", p2: "Aritra", score1: null, score2: null, status: "UPCOMING" },
+      { matchDay: 1, matchNum: 2, leg: 1, p1: "Kaustab", p2: "Biki", score1: null, score2: null, status: "UPCOMING" },
+      { matchDay: 1, matchNum: 3, leg: 1, p1: "Rishiraj", p2: "Priyanshu", score1: null, score2: null, status: "UPCOMING" },
+      { matchDay: 1, matchNum: 4, leg: 1, p1: "Rex Sayan", p2: "Anindya", score1: null, score2: null, status: "UPCOMING" },
+      { matchDay: 1, matchNum: 5, leg: 1, p1: "Debu", p2: "Soumyadeep", score1: null, score2: null, status: "UPCOMING" },
+      { matchDay: 1, matchNum: 6, leg: 1, p1: "Rahul", p2: "Sahil", score1: 1, score2: 0, status: "FT" },
+      { matchDay: 1, matchNum: 7, leg: 1, p1: "Tutun", p2: "Ankit", score1: null, score2: null, status: "UPCOMING" },
+      { matchDay: 1, matchNum: 8, leg: 1, p1: "Prakash", p2: "Romit", score1: null, score2: null, status: "UPCOMING" }
     ];
 
     let sortColumn = 'pts';
@@ -1732,6 +1801,7 @@
       matchDayFixtures.forEach(m => {
         const team1 = getTeamByName(m.p1);
         const team2 = getTeamByName(m.p2);
+        const isDone = m.status === 'FT';
 
         // 1. Duel Card
         const card = document.createElement('div');
@@ -1742,21 +1812,27 @@
               <span class="badge-match-num">MATCH #${m.matchNum}</span>
               <span class="badge-leg">LEG ${m.leg}</span>
             </div>
-            <span class="match-status">MATCH DAY ${m.matchDay}</span>
+            <span class="match-status" style="${isDone ? 'color: #00d26a; font-weight: 800;' : ''}">${isDone ? 'FT • COMPLETED' : 'MATCH DAY ' + m.matchDay}</span>
           </div>
           <div class="match-clash">
             <div class="match-team team-home" onclick="showTeamDetailsByName('${m.p1}')">
               <div class="match-team-crest">${team1.crest}</div>
               <div class="match-team-info">
-                <span class="match-team-name">${team1.name}</span>
+                <span class="match-team-name">${team1.name} ${isDone && m.score1 > m.score2 ? '<span class="badge-winner-tag">WIN</span>' : ''}</span>
                 <span class="match-team-gamer">${team1.gamer}</span>
               </div>
             </div>
-            <div class="match-vs-pill">VS</div>
+            ${isDone ? `
+              <div class="match-score-pill">
+                <span class="score-num ${m.score1 > m.score2 ? 'score-winner' : ''}">${m.score1}</span>
+                <span class="score-dash">-</span>
+                <span class="score-num ${m.score2 > m.score1 ? 'score-winner' : ''}">${m.score2}</span>
+              </div>
+            ` : `<div class="match-vs-pill">VS</div>`}
             <div class="match-team team-away" onclick="showTeamDetailsByName('${m.p2}')">
               <div class="match-team-crest">${team2.crest}</div>
               <div class="match-team-info">
-                <span class="match-team-name">${team2.name}</span>
+                <span class="match-team-name">${team2.name} ${isDone && m.score2 > m.score1 ? '<span class="badge-winner-tag">WIN</span>' : ''}</span>
                 <span class="match-team-gamer">${team2.gamer}</span>
               </div>
             </div>
@@ -1775,12 +1851,14 @@
             <div class="fixtures-player-cell">
               <div class="crest-wrapper" style="width: 24px; height: 24px; flex-shrink: 0;">${team1.crest}</div>
               <span>${m.p1}</span>
+              ${isDone ? `<span class="score-badge-table ${m.score1 > m.score2 ? 'winner' : 'loser'}">${m.score1} FT</span>` : ''}
             </div>
           </td>
           <td class="col-pname">
             <div class="fixtures-player-cell">
               <div class="crest-wrapper" style="width: 24px; height: 24px; flex-shrink: 0;">${team2.crest}</div>
               <span>${m.p2}</span>
+              ${isDone ? `<span class="score-badge-table ${m.score2 > m.score1 ? 'winner' : 'loser'}">${m.score2}</span>` : ''}
             </div>
           </td>
         `;
@@ -1828,7 +1906,7 @@
           if (!matchName && !matchGamer) return false;
         }
 
-        if (activeFilter === 'playoffs') return rank <= 6;
+        if (activeFilter === 'playoffs') return rank <= 8;
         if (activeFilter === 'relegation') return rank >= 15;
         return true;
       });
@@ -1838,8 +1916,8 @@
         const rank = displayData.indexOf(team) + 1;
         const tr = document.createElement('tr');
         
-        // Qualification Zone classes: TOP 6 PLAYOFFS, BOTTOM 2 RELEGATION
-        if (rank <= 6) {
+        // Qualification Zone classes: TOP 8 NEXT ROUND, BOTTOM 2 RELEGATION
+        if (rank <= 8) {
           tr.classList.add('zone-playoffs');
         } else if (rank >= 15) {
           tr.classList.add('zone-relegation');
@@ -1951,8 +2029,8 @@
       document.getElementById('modalGFGA').textContent = `${team.gf} / ${team.ga}`;
       
       const statusElem = document.getElementById('modalStatus');
-      if (rank <= 6) {
-        statusElem.textContent = 'Top 6 Playoff Spot';
+      if (rank <= 8) {
+        statusElem.textContent = 'Top 8 Next Round Spot';
         statusElem.style.color = 'var(--playoff-blue)';
       } else if (rank >= 15) {
         statusElem.textContent = 'Relegation Zone';
@@ -1965,13 +2043,27 @@
       const historyContainer = document.getElementById('modalHistory');
       const fixture = matchDayFixtures.find(m => m.p1.toLowerCase() === team.name.toLowerCase() || m.p2.toLowerCase() === team.name.toLowerCase());
       if (fixture) {
-        const opponent = fixture.p1.toLowerCase() === team.name.toLowerCase() ? fixture.p2 : fixture.p1;
+        const isP1 = fixture.p1.toLowerCase() === team.name.toLowerCase();
+        const opponent = isP1 ? fixture.p2 : fixture.p1;
         const oppTeam = getTeamByName(opponent);
+        const myScore = isP1 ? fixture.score1 : fixture.score2;
+        const oppScore = isP1 ? fixture.score2 : fixture.score1;
+        const isCompleted = fixture.status === 'FT';
+        let matchResultBadge = '';
+        if (isCompleted) {
+          if (myScore > oppScore) {
+            matchResultBadge = `<span style="color:#00d26a; font-weight:800; margin-left:6px;">[WON ${myScore}-${oppScore}]</span>`;
+          } else if (myScore < oppScore) {
+            matchResultBadge = `<span style="color:#ff4757; font-weight:800; margin-left:6px;">[LOST ${myScore}-${oppScore}]</span>`;
+          } else {
+            matchResultBadge = `<span style="color:#ffd700; font-weight:800; margin-left:6px;">[DREW ${myScore}-${oppScore}]</span>`;
+          }
+        }
         historyContainer.innerHTML = `
           <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <span style="font-size: 10px; color: var(--atk-gold); font-weight: 800; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px;">MATCH DAY ${fixture.matchDay} • MATCH #${fixture.matchNum} (LEG ${fixture.leg})</span>
-              <div style="font-size: 13.5px; font-weight: 700; color: #fff; margin-top: 2px;">vs ${oppTeam.name} (${oppTeam.gamer})</div>
+              <span style="font-size: 10px; color: var(--atk-gold); font-weight: 800; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px;">MATCH DAY ${fixture.matchDay} • MATCH #${fixture.matchNum} (LEG ${fixture.leg})${isCompleted ? ' • FULL TIME' : ''}</span>
+              <div style="font-size: 13.5px; font-weight: 700; color: #fff; margin-top: 2px;">vs ${oppTeam.name} (${oppTeam.gamer}) ${matchResultBadge}</div>
             </div>
             <div class="crest-wrapper" style="width: 28px; height: 28px; flex-shrink: 0;">${oppTeam.crest}</div>
           </div>
