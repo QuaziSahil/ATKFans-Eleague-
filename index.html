@@ -1710,8 +1710,8 @@
       { id: 5, name: "Debu", gamer: "Debu_Strikers", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#e65100', '#ffd600', 'shield', 'DEB') },
       { id: 6, name: "Rahul", gamer: "Rahul_United", mp: 1, w: 1, d: 0, l: 0, gf: 1, ga: 0, gd: 1, pts: 3, form: ['w'], crest: generateCrestSVG('#212121', '#ffffff', 'stripes', 'RHL') },
       { id: 7, name: "Tutun", gamer: "Tutun_Blasters", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#880e4f', '#ff4081', 'circle', 'TTN') },
-      { id: 8, name: "Prakash", gamer: "Prakash_Kings", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#01579b', '#ffab00', 'polygon', 'PRK') },
-      { id: 9, name: "Romit", gamer: "Romit_Squad", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#004d40', '#69f0ae', 'shield', 'RMT') },
+      { id: 8, name: "Prakash", gamer: "Prakash_Kings", mp: 1, w: 1, d: 0, l: 0, gf: 6, ga: 5, gd: 1, pts: 3, form: ['w'], crest: generateCrestSVG('#01579b', '#ffab00', 'polygon', 'PRK') },
+      { id: 9, name: "Romit", gamer: "Romit_Squad", mp: 1, w: 0, d: 0, l: 1, gf: 5, ga: 6, gd: -1, pts: 0, form: ['l'], crest: generateCrestSVG('#004d40', '#69f0ae', 'shield', 'RMT') },
       { id: 10, name: "Ankit", gamer: "Ankit_Dynamos", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#4a0e17', '#ffd700', 'circle', 'ANK') },
       { id: 11, name: "Sahil", gamer: "Sahil_ATK", mp: 1, w: 0, d: 0, l: 1, gf: 0, ga: 1, gd: -1, pts: 0, form: ['l'], crest: generateCrestSVG('#b71c1c', '#ffffff', 'stripes', 'SHL') },
       { id: 12, name: "Anindya", gamer: "Anindya_Warriors", mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [], crest: generateCrestSVG('#1a237e', '#40c4ff', 'polygon', 'AND') },
@@ -1730,7 +1730,7 @@
       { matchDay: 1, matchNum: 5, leg: 1, p1: "Debu", p2: "Soumyadeep", score1: null, score2: null, status: "UPCOMING" },
       { matchDay: 1, matchNum: 6, leg: 1, p1: "Rahul", p2: "Sahil", score1: 1, score2: 0, status: "FT" },
       { matchDay: 1, matchNum: 7, leg: 1, p1: "Tutun", p2: "Ankit", score1: null, score2: null, status: "UPCOMING" },
-      { matchDay: 1, matchNum: 8, leg: 1, p1: "Prakash", p2: "Romit", score1: null, score2: null, status: "UPCOMING" }
+      { matchDay: 1, matchNum: 8, leg: 1, p1: "Prakash", p2: "Romit", score1: 6, score2: 5, status: "FT" }
     ];
 
     let sortColumn = 'pts';
@@ -1847,14 +1847,14 @@
           <td style="text-align: center; font-weight: 700;">${m.matchDay}</td>
           <td style="text-align: center; font-weight: 800; color: var(--atk-gold); font-family: 'Rajdhani', sans-serif; font-size: 15px;">${m.matchNum}</td>
           <td style="text-align: center; font-weight: 800; color: var(--playoff-blue); font-family: 'Rajdhani', sans-serif; font-size: 15px;">${m.leg}</td>
-          <td class="col-pname">
+          <td class="col-pname" onclick="event.stopPropagation(); showTeamDetailsByName('${m.p1}')">
             <div class="fixtures-player-cell">
               <div class="crest-wrapper" style="width: 24px; height: 24px; flex-shrink: 0;">${team1.crest}</div>
               <span>${m.p1}</span>
               ${isDone ? `<span class="score-badge-table ${m.score1 > m.score2 ? 'winner' : 'loser'}">${m.score1} FT</span>` : ''}
             </div>
           </td>
-          <td class="col-pname">
+          <td class="col-pname" onclick="event.stopPropagation(); showTeamDetailsByName('${m.p2}')">
             <div class="fixtures-player-cell">
               <div class="crest-wrapper" style="width: 24px; height: 24px; flex-shrink: 0;">${team2.crest}</div>
               <span>${m.p2}</span>
@@ -1868,7 +1868,15 @@
 
     function showTeamDetailsByName(name) {
       const team = getTeamByName(name);
-      const rank = leagueData.indexOf(team) + 1;
+      const allZero = leagueData.every(t => t.mp === 0 && t.pts === 0);
+      const sorted = [...leagueData].sort((a, b) => {
+        if (allZero) return a.id - b.id;
+        if (a.pts !== b.pts) return b.pts - a.pts;
+        if (a.gd !== b.gd) return b.gd - a.gd;
+        if (a.gf !== b.gf) return b.gf - a.gf;
+        return a.name.localeCompare(b.name);
+      });
+      const rank = sorted.findIndex(t => t.id === team.id) + 1;
       showTeamDetails(team, rank > 0 ? rank : 1);
     }
 
